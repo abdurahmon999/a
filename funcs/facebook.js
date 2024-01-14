@@ -74,7 +74,7 @@ const getFBInfo = (videoUrl, cookie, useragent) => {
           url: videoUrl,
           sd: parseString(sdMatch[1]),
           hd: hdMatch && hdMatch[1] ? parseString(hdMatch[1]) : "",
-          title: titleMatch && titleMatch[1] ? parseString(titleMatch[1]) : data.match(/<title>(.*?)<\/title>/)?.[1] ?? "",
+          title: titleMatch && titleMatch[1] ? parseString(titleMatch[1]) : data.match(/<title>(.*?)<\/title>/)?[1] ?? "",
           thumbnail: thumbMatch && thumbMatch[1] ? parseString(thumbMatch[1]) : "",
         };
 
