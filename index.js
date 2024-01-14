@@ -1,7 +1,5 @@
 /* required to disable the deprecation warning, 
 will be fixed when node-telegram-bot-api gets a new update */
-require('dotenv').config()
-process.env['NTBA_FIX_350'] = 1
 let express = require('express');
 const dbFunctions = require('./users');
 let app = express();
@@ -31,11 +29,6 @@ let {
   pinterest,
   pinSearch
 } = require('./funcs/pinterest')
-let {
-  getYoutube,
-  getYoutubeAudio,
-  getYoutubeVideo
-} = require('./funcs/youtube')
 let {
   getFacebook,
   getFacebookNormal,
