@@ -1,4 +1,4 @@
-require('dotenv').config();
+
 const axios = require('axios');
 
 async function threadsDownload(bot, chatId, url, userName) {
