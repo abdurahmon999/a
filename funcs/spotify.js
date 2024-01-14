@@ -1,4 +1,4 @@
-require('dotenv').config()
+
 const axios = require('axios');
 const { parse } = require('spotify-uri');
 const util = require('util');
