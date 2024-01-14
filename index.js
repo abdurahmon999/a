@@ -303,27 +303,6 @@ bot.onText(/(https?:\/\/)?(www\.)?(open\.spotify\.com|spotify\.?com)\/playlist\/
   }
 })
 
-// Youtube Regex
-bot.onText(/^(?:https?:\/\/)?(?:www\.|m\.|music\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?/, async (msg, match) => {
-  dbFunctions.incrementUserCount(msg.from.id, (err) => {
-    if (err) {
-      console.error('Ошибка при увеличении счетчика пользователя:', err);
-      return; // Вернуться, если произошла ошибка
-    }
-  })
-  let userId = msg.from.id.toString();
-  if (userLocks[userId]) {
-    return;
-  }
-  userLocks[userId] = true;
-  try {
-    await bot.sendMessage(String(DEV_ID), ` Ism: ${msg.from.first_name ? msg.from.first_name : "-"}\n Familiya:  ${msg.from.last_name ? msg.from.last_name : "-"}\n username: ${msg.from.username ? "@" + msg.from.username : "-"}\n ID : ${msg.from.id}\n Tarmoq: Youtube`)
-    await getYoutube(bot, msg.chat.id, match[0], msg.chat.username)
-  } finally {
-    userLocks[userId] = false;
-  }
-})
-
 // Facebook Regex
 bot.onText(/^https?:\/\/(www\.)?(m\.)?facebook\.com\/.+/, async (msg, match) => {
   dbFunctions.incrementUserCount(msg.from.id, (err) => {
