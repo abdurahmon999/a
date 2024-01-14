@@ -55,7 +55,8 @@ const { count } = require('console');
 let userLocks = {};
 let userLocksText = {};
 let userLocksImage = {}
-let token = process.env.TOKEN
+const DEV_ID = 717474239
+let token = '6515476197:AAHWRGsyRuWkySp-VYtAUzOtnnFFFsZqL-U'
 let bot = new TelegramBot(token, {
   polling: true
 })
@@ -100,7 +101,7 @@ bot.onText(/\/start/, async (msg) => {
 
     db = await readDb('./database.json');
   } else if (db[chatId]) {
-    await bot.sendMessage(String(process.env.DEV_ID), `Ism: ${msg.from.first_name ? msg.from.first_name : "-"}\n Familiya:  ${msg.from.last_name ? msg.from.last_name : "-"}\n username: ${msg.from.username ? "@" + msg.from.username : "-"}\n ID : ${msg.from.id}\nTarmoq: Start bosdi`)
+    await bot.sendMessage(String(DEV_ID), `Ism: ${msg.from.first_name ? msg.from.first_name : "-"}\n Familiya:  ${msg.from.last_name ? msg.from.last_name : "-"}\n username: ${msg.from.username ? "@" + msg.from.username : "-"}\n ID : ${msg.from.id}\nTarmoq: Start bosdi`)
     await bot.sendMessage(chatId, response);
   }
 })
@@ -109,7 +110,7 @@ bot.onText(/\/start/, async (msg) => {
 // users
 bot.onText(/\/users/, async (msg) => {
   const user = msg.from.id;
-  if (user == process.env.DEV_ID) {
+  if (user == DEV_ID) {
     dbFunctions.getCurrentUserCount((err, count) => {
       if (err) {
         console.error("Error getting user count:", err);
@@ -124,7 +125,7 @@ bot.onText(/\/users/, async (msg) => {
 // Обработка команды /reset
 bot.onText(/\/reset/, async (msg) => {
   const user = msg.from.id;
-  if (user == process.env.DEV_ID) {
+  if (user == DEV_ID) {
     dbFunctions.resetUserCount((err) => {
       if (err) {
         console.error("Error resetting user count:", err);
@@ -151,7 +152,7 @@ bot.onText(/^(\/(pin|pinterest))/, async (msg) => {
   }
   userLocksImage[userId] = true;
   try {
-    await bot.sendMessage(String(process.env.DEV_ID), `Ism: ${msg.from.first_name ? msg.from.first_name : "-"}\n Familiya:  ${msg.from.last_name ? msg.from.last_name : "-"}\n username: ${msg.from.username ? "@" + msg.from.username : "-"}\n ID : ${msg.from.id}\n Tarmoq: Pinterest`)
+    await bot.sendMessage(String(DEV_ID), `Ism: ${msg.from.first_name ? msg.from.first_name : "-"}\n Familiya:  ${msg.from.last_name ? msg.from.last_name : "-"}\n username: ${msg.from.username ? "@" + msg.from.username : "-"}\n ID : ${msg.from.id}\n Tarmoq: Pinterest`)
     await pinSearch(bot, msg.chat.id, input, msg.chat.username);
   } finally {
     userLocksImage[userId] = false;
@@ -172,7 +173,7 @@ bot.onText(/https?:\/\/(?:.*\.)?tiktok\.com/, async (msg) => {
   }
   userLocks[userId] = true;
   try {
-    await bot.sendMessage(String(process.env.DEV_ID), ` Ism: ${msg.from.first_name ? msg.from.first_name : "-"}\n Familiya:  ${msg.from.last_name ? msg.from.last_name : "-"}\n username: ${msg.from.username ? "@" + msg.from.username : "-"}\n ID : ${msg.from.id}\n Tarmoq: Tik tok`)
+    await bot.sendMessage(String(DEV_ID), ` Ism: ${msg.from.first_name ? msg.from.first_name : "-"}\n Familiya:  ${msg.from.last_name ? msg.from.last_name : "-"}\n username: ${msg.from.username ? "@" + msg.from.username : "-"}\n ID : ${msg.from.id}\n Tarmoq: Tik tok`)
     await getTiktokInfo(bot, msg.chat.id, msg.text, msg.chat.username);
   } finally {
     userLocks[userId] = false;
@@ -194,7 +195,7 @@ bot.onText(/https?:\/\/(?:.*\.)?x\.com/, async (msg) => {
     }
     userLocks[userId] = true;
     try {
-      await bot.sendMessage(String(process.env.DEV_ID), ` Ism: ${msg.from.first_name ? msg.from.first_name : "-"}\n Familiya:  ${msg.from.last_name ? msg.from.last_name : "-"}\n username: ${msg.from.username ? "@" + msg.from.username : "-"}\n ID : ${msg.from.id}\n Tarmoq: x (twitter)`)
+      await bot.sendMessage(String(DEV_ID), ` Ism: ${msg.from.first_name ? msg.from.first_name : "-"}\n Familiya:  ${msg.from.last_name ? msg.from.last_name : "-"}\n username: ${msg.from.username ? "@" + msg.from.username : "-"}\n ID : ${msg.from.id}\n Tarmoq: x (twitter)`)
       await getDataTwitter(bot, msg.chat.id, msg.text, msg.chat.username);
     } finally {
       userLocks[userId] = false;
@@ -218,7 +219,7 @@ bot.onText(/(https?:\/\/)?(www\.)?(instagram\.com)\/.+/, async (msg) => {
   }
   userLocks[userId] = true;
   try {
-    await bot.sendMessage(String(process.env.DEV_ID), `Ism: ${msg.from.first_name ? msg.from.first_name : "-"}\n Familiya:  ${msg.from.last_name ? msg.from.last_name : "-"}\n username: ${msg.from.username ? "@" + msg.from.username : "-"}\n ID : ${msg.from.id}\n Tarmoq: Instagram`)
+    await bot.sendMessage(String(DEV_ID), `Ism: ${msg.from.first_name ? msg.from.first_name : "-"}\n Familiya:  ${msg.from.last_name ? msg.from.last_name : "-"}\n username: ${msg.from.username ? "@" + msg.from.username : "-"}\n ID : ${msg.from.id}\n Tarmoq: Instagram`)
     await downloadInstagram(bot, msg.chat.id, msg.text, msg.chat.username);
   } finally {
     userLocks[userId] = false;
@@ -239,7 +240,7 @@ bot.onText(/(https?:\/\/)?(www\.)?(pinterest\.ca|pinterest\.?com|pin\.?it)\/.+/,
   }
   userLocks[userId] = true;
   try {
-    await bot.sendMessage(String(process.env.DEV_ID), ` Ism: ${msg.from.first_name ? msg.from.first_name : "-"}\n Familiya:  ${msg.from.last_name ? msg.from.last_name : "-"}\n username: ${msg.from.username ? "@" + msg.from.username : "-"}\n ID : ${msg.from.id}\n Tarmoq: Pinterest`)
+    await bot.sendMessage(String(DEV_ID), ` Ism: ${msg.from.first_name ? msg.from.first_name : "-"}\n Familiya:  ${msg.from.last_name ? msg.from.last_name : "-"}\n username: ${msg.from.username ? "@" + msg.from.username : "-"}\n ID : ${msg.from.id}\n Tarmoq: Pinterest`)
     await pinterest(bot, msg.chat.id, msg.text, msg.chat.username);
   } finally {
     userLocks[userId] = false;
@@ -260,7 +261,7 @@ bot.onText(/(https?:\/\/)?(www\.)?(open\.spotify\.com|spotify\.?com)\/track\/.+/
   }
   userLocks[userId] = true;
   try {
-    await bot.sendMessage(String(process.env.DEV_ID), ` Ism: ${msg.from.first_name ? msg.from.first_name : "-"}\n Familiya:  ${msg.from.last_name ? msg.from.last_name : "-"}\n username: ${msg.from.username ? "@" + msg.from.username : "-"}\n ID : ${msg.from.id}\n Tarmoq: Spotify`)
+    await bot.sendMessage(String(DEV_ID), ` Ism: ${msg.from.first_name ? msg.from.first_name : "-"}\n Familiya:  ${msg.from.last_name ? msg.from.last_name : "-"}\n username: ${msg.from.username ? "@" + msg.from.username : "-"}\n ID : ${msg.from.id}\n Tarmoq: Spotify`)
     await getSpotifySong(bot, msg.chat.id, match[0], msg.chat.username)
   } finally {
     userLocks[userId] = false;
@@ -281,7 +282,7 @@ bot.onText(/(https?:\/\/)?(www\.)?(open\.spotify\.com|spotify\.?com)\/album\/.+/
   }
   userLocks[userId] = true;
   try {
-    await bot.sendMessage(String(process.env.DEV_ID), ` Ism: ${msg.from.first_name ? msg.from.first_name : "-"}\n Familiya:  ${msg.from.last_name ? msg.from.last_name : "-"}\n username: ${msg.from.username ? "@" + msg.from.username : "-"}\n ID : ${msg.from.id}\n Tarmoq: Spotify album`)
+    await bot.sendMessage(String(DEV_ID), ` Ism: ${msg.from.first_name ? msg.from.first_name : "-"}\n Familiya:  ${msg.from.last_name ? msg.from.last_name : "-"}\n username: ${msg.from.username ? "@" + msg.from.username : "-"}\n ID : ${msg.from.id}\n Tarmoq: Spotify album`)
     await getAlbumsSpotify(bot, msg.chat.id, match[0], msg.chat.username)
   } finally {
     userLocks[userId] = false;
@@ -302,7 +303,7 @@ bot.onText(/(https?:\/\/)?(www\.)?(open\.spotify\.com|spotify\.?com)\/playlist\/
   }
   userLocks[userId] = true;
   try {
-    await bot.sendMessage(String(process.env.DEV_ID), ` Ism: ${msg.from.first_name ? msg.from.first_name : "-"}\n Familiya:  ${msg.from.last_name ? msg.from.last_name : "-"}\n username: ${msg.from.username ? "@" + msg.from.username : "-"}\n ID : ${msg.from.id}\n Tarmoq: Spotify playlist`)
+    await bot.sendMessage(String(DEV_ID), ` Ism: ${msg.from.first_name ? msg.from.first_name : "-"}\n Familiya:  ${msg.from.last_name ? msg.from.last_name : "-"}\n username: ${msg.from.username ? "@" + msg.from.username : "-"}\n ID : ${msg.from.id}\n Tarmoq: Spotify playlist`)
     await getPlaylistSpotify(bot, msg.chat.id, match[0], msg.chat.username)
   } finally {
     userLocks[userId] = false;
@@ -323,7 +324,7 @@ bot.onText(/^(?:https?:\/\/)?(?:www\.|m\.|music\.)?youtu\.?be(?:\.com)?\/?.*(?:w
   }
   userLocks[userId] = true;
   try {
-    await bot.sendMessage(String(process.env.DEV_ID), ` Ism: ${msg.from.first_name ? msg.from.first_name : "-"}\n Familiya:  ${msg.from.last_name ? msg.from.last_name : "-"}\n username: ${msg.from.username ? "@" + msg.from.username : "-"}\n ID : ${msg.from.id}\n Tarmoq: Youtube`)
+    await bot.sendMessage(String(DEV_ID), ` Ism: ${msg.from.first_name ? msg.from.first_name : "-"}\n Familiya:  ${msg.from.last_name ? msg.from.last_name : "-"}\n username: ${msg.from.username ? "@" + msg.from.username : "-"}\n ID : ${msg.from.id}\n Tarmoq: Youtube`)
     await getYoutube(bot, msg.chat.id, match[0], msg.chat.username)
   } finally {
     userLocks[userId] = false;
@@ -344,7 +345,7 @@ bot.onText(/^https?:\/\/(www\.)?(m\.)?facebook\.com\/.+/, async (msg, match) => 
   }
   userLocks[userId] = true;
   try {
-    await bot.sendMessage(String(process.env.DEV_ID), ` Ism: ${msg.from.first_name ? msg.from.first_name : "-"}\n Familiya:  ${msg.from.last_name ? msg.from.last_name : "-"}\n username: ${msg.from.username ? "@" + msg.from.username : "-"}\n ID : ${msg.from.id}\n Tarmoq: Facebook`)
+    await bot.sendMessage(String(DEV_ID), ` Ism: ${msg.from.first_name ? msg.from.first_name : "-"}\n Familiya:  ${msg.from.last_name ? msg.from.last_name : "-"}\n username: ${msg.from.username ? "@" + msg.from.username : "-"}\n ID : ${msg.from.id}\n Tarmoq: Facebook`)
     await getFacebook(bot, msg.chat.id, match[0], msg.chat.username)
   } finally {
     userLocks[userId] = false;
@@ -365,7 +366,7 @@ bot.onText(/^https?:\/\/(www\.)?threads\.net\/.+/, async (msg, match) => {
   }
   userLocks[userId] = true;
   try {
-    await bot.sendMessage(String(process.env.DEV_ID), ` Ism: ${msg.from.first_name ? msg.from.first_name : "-"}\n Familiya:  ${msg.from.last_name ? msg.from.last_name : "-"}\n username: ${msg.from.username ? "@" + msg.from.username : "-"}\n ID : ${msg.from.id}\n Tarmoq: Threads`)
+    await bot.sendMessage(String(DEV_ID), ` Ism: ${msg.from.first_name ? msg.from.first_name : "-"}\n Familiya:  ${msg.from.last_name ? msg.from.last_name : "-"}\n username: ${msg.from.username ? "@" + msg.from.username : "-"}\n ID : ${msg.from.id}\n Tarmoq: Threads`)
     await threadsDownload(bot, msg.chat.id, match[0], msg.chat.username)
   } finally {
     userLocks[userId] = false;
